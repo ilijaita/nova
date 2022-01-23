@@ -1,24 +1,55 @@
-import logo from './logo.svg';
+import * as React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css';
+import Layout from './components/layout/Layout'
+import Dashboard from './components/dashboard/Dashboard'
+import CreatePost from './components/posts/CreatePost'
+import PostDetails from './components/posts/PostDetails'
+import SignUp from './components/auth/SignUp'
+import SignIn from './components/auth/SignIn'
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#819ca9',
+      main: '#546e7a',
+      dark: '#29434e',
+    },
+    secondary: {
+      light: '#e7e4e4',
+      main: '#9e9e9e',
+      dark: '#ba000d',
+      contrastText: '#707070',
+    },
+  },
+  
+    typography:{
+      fontFamily: 'Quicksand',
+      fontWeightLight: 400,
+      fontWeightRegular: 500,
+      fontWeightMedium: 600,
+      fontWeightBold: 700,
+    }
+});
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route exact path='/' element={< Dashboard />} />
+              <Route exact path={'/post/:id'} element={< PostDetails />} />
+              <Route  path='/signup' element={< SignUp />} />
+              <Route  path='/signin' element={< SignIn />} />
+              <Route  path='/createpost' element={< CreatePost />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </ThemeProvider>
   );
 }
 
